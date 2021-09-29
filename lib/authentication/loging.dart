@@ -52,6 +52,7 @@ class _LogingClassState extends State<LogingClass> {
     return Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: false,
         bottomNavigationBar: Container(
           height: 100,
           child: TermFooterClass(),
@@ -84,9 +85,12 @@ class _LogingClassState extends State<LogingClass> {
           GestureDetector(
             child: Container(
               decoration: BoxDecoration(),
-              child: Text(
-                login ? "SignUP" : "LogIn",
-                style: TextStyle(fontSize: 15, color: primaryColor),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  login ? "Sign up" : "Log in",
+                  style: TextStyle(fontSize: 18, color: primaryColor),
+                ),
               ),
             ),
             onTap: () {
@@ -102,7 +106,6 @@ class _LogingClassState extends State<LogingClass> {
 
   Widget logInWidget() {
     return Container(
-      //color: lightGray,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -124,8 +127,7 @@ class _LogingClassState extends State<LogingClass> {
                   },
                   showFlag: false,
                   // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-                  initialSelection: 'PK',
-                  favorite: ['+92', 'PK'],
+                  initialSelection: 'QA',
                   // optional. Shows only country name and flag
                   showCountryOnly: false,
                   // optional. Shows only country name and flag when popup is closed.
@@ -136,7 +138,7 @@ class _LogingClassState extends State<LogingClass> {
                     controller: phoneController,
                     keyboardType: TextInputType.numberWithOptions(),
                     decoration: InputDecoration(
-                        hintText: 'Phone',
+                        hintText: 'Enter Phone',
                         hintStyle: TextStyle(color: lightGray),
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.only(left: 10, bottom: 0)),
@@ -214,7 +216,7 @@ class _LogingClassState extends State<LogingClass> {
    */
           // forgotPassword(),
           PrimaryButton(
-            Heading: 'LOG IN',
+            Heading: 'Sign in',
             onTap: () {
               validationPhone(countryCode + phoneController.text);
             },
@@ -365,7 +367,6 @@ class _LogingClassState extends State<LogingClass> {
                   showFlag: false,
                   // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
                   initialSelection: 'QA',
-                  favorite: ['+974', 'QA'],
                   // optional. Shows only country name and flag
                   showCountryOnly: false,
                   // optional. Shows only country name and flag when popup is closed.
@@ -444,7 +445,7 @@ class _LogingClassState extends State<LogingClass> {
           ),
 //SizedBox(height: 20,),
           PrimaryButton(
-            Heading: 'SIGN UP',
+            Heading: 'Sign up',
             onTap: () async {
               await signUpValidation(
                   usernameController.text,
