@@ -52,21 +52,18 @@ class _LogingClassState extends State<LogingClass> {
     return Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
-        resizeToAvoidBottomInset: true,
         bottomNavigationBar: Container(
-          height: 70,
+          height: 100,
           child: TermFooterClass(),
         ),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Container(
-            // height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-
             child: Column(
               children: [
                 HeaderClass(login),
-                //loggingButton(),
                 login ? logInWidget() : signUpWidget(),
               ],
             ),
@@ -127,7 +124,7 @@ class _LogingClassState extends State<LogingClass> {
                   },
                   showFlag: false,
                   // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-                  initialSelection: 'QAR',
+                  initialSelection: 'PK',
                   favorite: ['+92', 'PK'],
                   // optional. Shows only country name and flag
                   showCountryOnly: false,
