@@ -440,7 +440,6 @@ class _DriverHomeClassState extends State<DriverHomeClass> {
                             width: 50,
                             // color: Colors.white
                             margin: EdgeInsets.only(right: 15),
-
                             decoration: new BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
@@ -658,7 +657,7 @@ class _DriverHomeClassState extends State<DriverHomeClass> {
                             )
                           : rideStatus == 4
                               ? PrimaryButton(
-                                  FillColor: Colors.red,
+                                  FillColor: Colors.green[700],
                                   Heading: 'Complete Trip',
                                   onTap: rideCompletPress,
                                 )
