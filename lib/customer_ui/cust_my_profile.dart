@@ -148,11 +148,11 @@ class _CustomerPrfileClassState extends State<CustomerPrfileClass> {
           _image == null
               ? CircleAvatar(
                   backgroundColor: Colors.black.withOpacity(0.2),
-                  radius: 60,
+                  radius: 50,
                   child: Stack(
                     children: [
                       CircleAvatar(
-                          radius: 60,
+                          radius: 50,
                           backgroundColor: Colors.black.withOpacity(0),
                           backgroundImage:
                               NetworkImage(currentUserInfo.displayImage)),
@@ -179,8 +179,8 @@ class _CustomerPrfileClassState extends State<CustomerPrfileClass> {
                               },
                               child: Icon(
                                 Icons.photo_camera,
-                                size: 40,
-                                color: Colors.grey.shade600,
+                                size: 30,
+                                color: Colors.black,
                               )))
                     ],
                   ),
