@@ -148,11 +148,11 @@ class _CustomerPrfileClassState extends State<CustomerPrfileClass> {
           _image == null
               ? CircleAvatar(
                   backgroundColor: Colors.black.withOpacity(0.2),
-                  radius: 50,
+                  radius: 60,
                   child: Stack(
                     children: [
                       CircleAvatar(
-                          radius: 50,
+                          radius: 60,
                           backgroundColor: Colors.black.withOpacity(0),
                           backgroundImage:
                               NetworkImage(currentUserInfo.displayImage)),
@@ -179,8 +179,8 @@ class _CustomerPrfileClassState extends State<CustomerPrfileClass> {
                               },
                               child: Icon(
                                 Icons.photo_camera,
-                                size: 30,
-                                color: Colors.black,
+                                size: 40,
+                                color: Colors.grey.shade600,
                               )))
                     ],
                   ),
@@ -428,45 +428,68 @@ class _CustomerPrfileClassState extends State<CustomerPrfileClass> {
                       ],
                     ),
                   ),
-                  PrimaryButton(
-                    Heading: 'Update',
-                    onTap: () async {
-                      showSnackBar('Processing');
-                      if (_image != null) {
-                        firebase_storage.UploadTask uploadTask;
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 20,
+                    ),
+                    child: Center(
+                      child: TextButton(
+                        style: ButtonStyle(
+                            padding: MaterialStateProperty.all<EdgeInsets>(
+                                EdgeInsets.only(
+                                    left: 70, right: 70, top: 12, bottom: 12)),
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.black),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    side: BorderSide(color: Colors.black)))),
+                        onPressed: () async {
+                          showSnackBar('Processing');
+                          if (_image != null) {
+                            firebase_storage.UploadTask uploadTask;
 
-                        // Create a Reference to the file
+                            // Create a Reference to the file
 
-                        firebase_storage.Reference reference = firebase_storage
-                            .FirebaseStorage.instance
-                            .ref()
-                            .child("users")
-                            .child(currentUserInfo.id);
+                            firebase_storage.Reference reference =
+                                firebase_storage.FirebaseStorage.instance
+                                    .ref()
+                                    .child("users")
+                                    .child(currentUserInfo.id);
 
-                        firebase_storage.TaskSnapshot storageTaskSnapshot =
-                            await reference.putFile(_image);
+                            firebase_storage.TaskSnapshot storageTaskSnapshot =
+                                await reference.putFile(_image);
 
-                        print(storageTaskSnapshot.ref.getDownloadURL());
+                            print(storageTaskSnapshot.ref.getDownloadURL());
 
-                        dowUrl = await storageTaskSnapshot.ref.getDownloadURL();
-                      }
-                      DatabaseReference databaseReference = FirebaseDatabase
-                          .instance
-                          .reference()
-                          .child('users/${currentUserInfo.id}/');
+                            dowUrl =
+                                await storageTaskSnapshot.ref.getDownloadURL();
+                          }
+                          DatabaseReference databaseReference = FirebaseDatabase
+                              .instance
+                              .reference()
+                              .child('users/${currentUserInfo.id}/');
 
-                      databaseReference.child('username').set(username.text);
-                      databaseReference.child('dob').set(dob.text);
-                      if (_image != null) {
-                        databaseReference.child('displayImage').set(dowUrl);
-                      }
-                      await HelperMethods.getCurrentUSerInfo();
+                          databaseReference
+                              .child('username')
+                              .set(username.text);
+                          databaseReference.child('dob').set(dob.text);
+                          if (_image != null) {
+                            databaseReference.child('displayImage').set(dowUrl);
+                          }
+                          await HelperMethods.getCurrentUSerInfo();
 
-                      showSnackBar('Updated');
-                      await HelperMethods.getCurrentUSerInfo();
-                      setState(() {});
-                    },
-                  ),
+                          showSnackBar('Updated');
+                          await HelperMethods.getCurrentUSerInfo();
+                          setState(() {});
+                        },
+                        child: Text('Update', style: TextStyle(fontSize: 15)),
+                      ),
+                    ),
+                  )
                 ],
               )),
             ],
