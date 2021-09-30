@@ -614,7 +614,7 @@ class _LogingClassState extends State<LogingClass> {
       constant_phone = phone;
       constant_name = name;
       constant_email = email;
-      constant_role = 1;
+      constant_role = 0;
       showSnackBar('Please Wait');
     } on FirebaseAuthException catch (e) {
       showSnackBar(e.message);
