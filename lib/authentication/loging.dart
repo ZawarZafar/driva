@@ -615,6 +615,8 @@ class _LogingClassState extends State<LogingClass> {
       constant_phone = phone;
       constant_name = name;
       constant_email = email;
+      //constant_role == 1 => driver UI
+      //constant_role == 0 => rider UI
       constant_role = 1;
       showSnackBar('Please Wait');
     } on FirebaseAuthException catch (e) {
