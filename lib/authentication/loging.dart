@@ -216,8 +216,9 @@ class _LogingClassState extends State<LogingClass> {
    */
           // forgotPassword(),
           PrimaryButton(
-            Heading: 'Sign in',
+            Heading: 'Log in',
             onTap: () {
+              FocusScope.of(context).unfocus();
               validationPhone(countryCode + phoneController.text);
             },
           ),
