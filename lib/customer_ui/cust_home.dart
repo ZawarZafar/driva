@@ -1960,6 +1960,7 @@ class _CustomerHomeClassState extends State<CustomerHomeClass> {
       DatabaseReference statusResume = FirebaseDatabase.instance
           .reference()
           .child('users/${currentUserInfo.id}/newTrip');
+
       statusResume.once().then((DataSnapshot v) async {
         if (v.value != null) {
           trip_id = await v.value;
