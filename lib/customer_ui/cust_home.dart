@@ -1775,7 +1775,7 @@ class _CustomerHomeClassState extends State<CustomerHomeClass> {
 
   Future<void> continuePressed() async {
     setState(() {
-      rideStatus = 6;
+      rideStatus = 5;
     });
     await createRideRequest();
     var _duration = Duration(seconds: 2);
