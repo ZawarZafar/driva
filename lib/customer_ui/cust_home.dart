@@ -140,8 +140,10 @@ class _CustomerHomeClassState extends State<CustomerHomeClass> {
                             : rideStatus == 2
                                 ? 'Meet at the pickup point'
                                 : 'Add Route',
-                true,
-                _scaffoldKey)),
+                          true,
+                        _scaffoldKey)
+                ),
+                
         body: isLoading == true
             ? Center(
                 child: CircularProgressIndicator(),
@@ -192,6 +194,7 @@ class _CustomerHomeClassState extends State<CustomerHomeClass> {
           );
   }
 
+  //getting user saved locations
   getLocations() {
     try {
       DatabaseReference updateRef = FirebaseDatabase.instance
@@ -564,6 +567,7 @@ class _CustomerHomeClassState extends State<CustomerHomeClass> {
                                   builder: (context) => AddFvtLocation(1)));
                           getLocations();
                           setState(() {});
+                          
                           if (response == 'set pickup' &&
                               Provider.of<AppData>(context, listen: false)
                                       .destinationAddress !=
@@ -1093,6 +1097,7 @@ class _CustomerHomeClassState extends State<CustomerHomeClass> {
 
     startTime();
     // listnerMessage();
+    //getting user saved locations
     getLocations();
 
     //checkRideRequestStatus();
@@ -2206,6 +2211,7 @@ class _CustomerHomeClassState extends State<CustomerHomeClass> {
         print('Triggered Listener on -- CHANGED -- friend info');
         print(
             'info that changed: ${event.snapshot.key}: ${event.snapshot.value}');
+
         if (event.snapshot.value == 1) {
           DatabaseReference updateRef =
               FirebaseDatabase.instance.reference().child('users/${driver_id}');
