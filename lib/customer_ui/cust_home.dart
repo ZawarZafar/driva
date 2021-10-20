@@ -140,10 +140,9 @@ class _CustomerHomeClassState extends State<CustomerHomeClass> {
                             : rideStatus == 2
                                 ? 'Meet at the pickup point'
                                 : 'Add Route',
-                          true,
-                        _scaffoldKey)
-                ),
-                
+                true,
+                _scaffoldKey)),
+
         body: isLoading == true
             ? Center(
                 child: CircularProgressIndicator(),
@@ -567,7 +566,7 @@ class _CustomerHomeClassState extends State<CustomerHomeClass> {
                                   builder: (context) => AddFvtLocation(1)));
                           getLocations();
                           setState(() {});
-                          
+
                           if (response == 'set pickup' &&
                               Provider.of<AppData>(context, listen: false)
                                       .destinationAddress !=
