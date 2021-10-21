@@ -70,6 +70,7 @@ class _MassageScreenState extends State<MassageScreen> {
                 .onValue,
         builder: (BuildContext context, AsyncSnapshot<Event> snap) {
           if (snap.hasError) return Text('Error: ${snap.error}');
+
           if (!snap.hasData) {
             return Center(
               child: Column(
