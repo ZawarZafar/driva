@@ -35,7 +35,7 @@ class _LogingClassState extends State<LogingClass> {
   var confirmPasswordController = TextEditingController();
 
   String countryCode;
-
+//toast
   void showSnackBar(String title) {
     final snackBar = SnackBar(
       content: Text(
@@ -72,6 +72,7 @@ class _LogingClassState extends State<LogingClass> {
         ));
   }
 
+//changing the login screen
   Widget loggingChange() {
     return Container(
       padding: EdgeInsets.all(10),
@@ -104,6 +105,7 @@ class _LogingClassState extends State<LogingClass> {
     );
   }
 
+//login widget
   Widget logInWidget() {
     return Container(
       child: Column(
@@ -228,6 +230,7 @@ class _LogingClassState extends State<LogingClass> {
     );
   }
 
+//does nothing
   Widget forgotPassword() {
     return Container(
       alignment: Alignment.centerLeft,
@@ -247,6 +250,7 @@ class _LogingClassState extends State<LogingClass> {
     );
   }
 
+//social buttons hidden
   Widget socialButtons() {
     return Container(
       child: Column(
@@ -290,6 +294,7 @@ class _LogingClassState extends State<LogingClass> {
     );
   }
 
+//sign up widget
   Widget signUpWidget() {
     return Container(
       child: Column(
@@ -463,6 +468,7 @@ class _LogingClassState extends State<LogingClass> {
     );
   }
 
+//sign in with phone
   void loginViaPhone(String number) {
     DatabaseReference databaseReference =
         FirebaseDatabase.instance.reference().child('users/');
@@ -486,6 +492,7 @@ class _LogingClassState extends State<LogingClass> {
     });
   }
 
+//sign in with email
   void loginFunc(email, password) async {
     try {
       UserCredential user = (await FirebaseAuth.instance
@@ -524,6 +531,7 @@ class _LogingClassState extends State<LogingClass> {
     }
   }
 
+//validation the signup
   void signUpValidation(String username, String email, String phone,
       String password, String confirmPassword) {
 //checkConnectivity();
@@ -561,6 +569,7 @@ class _LogingClassState extends State<LogingClass> {
     }
   }
 
+//validation the email and password
   void validationForm(String email, String password) {
     // checkConnectivity();
     if (email == null || email == "") {
@@ -575,6 +584,7 @@ class _LogingClassState extends State<LogingClass> {
     }
   }
 
+//validate phone number
   void validationPhone(String number) {
     // checkConnectivity();
     if (number == null || number == "") {
@@ -589,6 +599,7 @@ class _LogingClassState extends State<LogingClass> {
     }
   }
 
+//phone verification after signing up
   void phoneVerification(String phone) async {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phone,
@@ -608,6 +619,7 @@ class _LogingClassState extends State<LogingClass> {
     );
   }
 
+//registering the new user
   Future<void> signUpFunc(email, password, String name, String phone) async {
     try {
       showSnackBar('Please Wait');
@@ -627,6 +639,7 @@ class _LogingClassState extends State<LogingClass> {
     }
   }
 
+//phone verification at the login screen
   void phoneVerificationLogin(String phone) async {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phone,
