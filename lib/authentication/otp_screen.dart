@@ -23,7 +23,7 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   var codeController = TextEditingController();
-  int _otpCodeLength = 6;
+  int _otpCodeLength = 4;
   bool _isLoadingButton = false;
   bool _enableButton = false;
   String _otpCode = "";
@@ -171,7 +171,7 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
               controller: codeController,
               onEditingComplete: verifyPress,
               decoration: InputDecoration(
-                hintText: '--  --  --  --  --  --',
+                hintText: '__ __ __ __',
                 hintStyle: TextStyle(color: lightGray, fontSize: 20),
               ),
               textAlign: TextAlign.center,
@@ -218,6 +218,7 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
 
   Future<void> verifyPress() async {
     showSnackBar('Please wait');
+
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: constant_phone,
       verificationCompleted: (PhoneAuthCredential credential) {},
@@ -237,6 +238,7 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
           showSnackBar('Kindly use another number');
         }
 
+        //creating the sign in with email & password
         try {
           UserCredential userCredential = await FirebaseAuth.instance
               .createUserWithEmailAndPassword(
@@ -247,6 +249,8 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
             print(e);
           });
           User user = FirebaseAuth.instance.currentUser;
+
+          //uploading the data in firebase under user's uid
           DatabaseReference databaseReference =
               FirebaseDatabase.instance.reference().child('users/${user.uid}');
 

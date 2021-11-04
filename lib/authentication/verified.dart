@@ -82,9 +82,9 @@ class _VerifiedScreenClassState extends State<VerifiedScreenClass> {
   Future<void> buttonPress() async {
     await HelperMethods.getCurrentUSerInfo();
     if (constant_role == 0) {
-      AppRoutes.replace(context, CareRegistrationClass());
+      AppRoutes.replace(context, CustomerHomeClass());
     } else if (constant_role == 1) {
-      AppRoutes.replace(context, DriverHomeClass());
+      AppRoutes.replace(context, CareRegistrationClass());
     }
   }
 

@@ -6,6 +6,7 @@ import 'package:flutter_app/authentication/otp_screen.dart';
 import 'package:flutter_app/core/authentication/authentication.dart';
 import 'package:flutter_app/driver_ui/driver_home.dart';
 import 'package:flutter_app/utilities/alert.dart';
+import 'package:http/http.dart' as http
 import 'package:flutter_app/utilities/customer_buttons.dart';
 import 'package:flutter_app/utilities/header_footer.dart';
 import 'package:flutter_app/utilities/routes.dart';
@@ -553,6 +554,7 @@ class _LogingClassState extends State<LogingClass> {
       showSnackBar('Please Enter Password');
     } else {
       showSnackBar('Please Wait...!');
+      //checking if phone already registered with someone else name
       DatabaseReference databaseReference =
           FirebaseDatabase.instance.reference().child('users/');
       databaseReference
@@ -604,7 +606,7 @@ class _LogingClassState extends State<LogingClass> {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phone,
       verificationCompleted: (PhoneAuthCredential credential) {
-        print('j');
+        print('verification completed');
       },
       verificationFailed: (FirebaseAuthException e) {
         showSnackBar(e.message);
@@ -612,7 +614,7 @@ class _LogingClassState extends State<LogingClass> {
       },
       codeSent: (String verificationId, int resendToken) async {
         print('code sent');
-        showSnackBar('Code Sent');
+        showSnackBar('A OTP code has been send to $phone');
         AppRoutes.makeFirst(context, OTPScreenClass());
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
