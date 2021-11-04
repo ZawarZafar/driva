@@ -6,7 +6,7 @@ import 'package:flutter_app/authentication/otp_screen.dart';
 import 'package:flutter_app/core/authentication/authentication.dart';
 import 'package:flutter_app/driver_ui/driver_home.dart';
 import 'package:flutter_app/utilities/alert.dart';
-import 'package:http/http.dart' as http
+import 'package:http/http.dart' as http;
 import 'package:flutter_app/utilities/customer_buttons.dart';
 import 'package:flutter_app/utilities/header_footer.dart';
 import 'package:flutter_app/utilities/routes.dart';
