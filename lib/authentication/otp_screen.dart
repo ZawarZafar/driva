@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_app/authentication/verified.dart';
 import 'package:flutter_app/customer_ui/bar_drawer.dart';
 import 'package:flutter_app/utilities/customer_buttons.dart';
@@ -27,6 +28,8 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
   bool _isLoadingButton = false;
   bool _enableButton = false;
   String _otpCode = "";
+  String _baseURL = "";
+
   void showSnackBar(String title) {
     final snackBar = SnackBar(
       content: Text(
@@ -206,6 +209,16 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
     );
   }
 
+  void postMethod(email, password, username, phone, countrycode) async {
+    try {
+      final response = await http.post(Uri.parse(_baseURL), body: "");
+      print(response.body);
+      showSnackBar("Please wait!");
+    } catch (e) {
+      showSnackBar(e.maessage);
+    }
+  }
+
   Future<void> resendCode() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: constant_phone,
@@ -279,6 +292,9 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
               .linkWithCredential(phoneAuthCredential)
               .then((value) {
             if (value.user != null) {
+              postMethod(constant_email, registered_password, constant_name,
+                  constant_phone, country_Code);
+
               databaseReference.set(userMap);
               AppRoutes.makeFirst(context, VerifiedScreenClass());
             } else {

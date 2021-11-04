@@ -56,6 +56,8 @@ String image;
 String date, time;
 var timestamp;
 String custom_rider, custom_rider_id, custom_trip_id;
+String country_Code;
+String registered_password;
 String constant_phone;
 String constant_name;
 String constant_email;
