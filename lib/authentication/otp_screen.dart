@@ -31,7 +31,7 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
   bool _isLoadingButton = false;
   bool _enableButton = false;
   String _otpCode = "";
-  String _baseURL = "";
+  String _baseURL = "https://2ba3-119-152-139-177.ngrok.io/";
 
   void showSnackBar(String title) {
     final snackBar = SnackBar(
@@ -212,23 +212,35 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
     );
   }
 
-  void postMethod(email, password, username, phone, countrycode) async {
-    try {
-      final response = await http.post(Uri.parse(_baseURL),
-          body: jsonEncode(<String, String>{
-            "": "",
-          }));
-      showSnackBar("Please wait!");
+  // void postMethod(email, password, username, phone, countrycode) async {
+  //   try {
+  //     final response = await http.post(Uri.parse(_baseURL),
+  //         headers: <String, String>{
+  //           'Content-Type': 'application/json; charset=UTF-8',
+  //         },
+  //         body: jsonEncode(<String, String>{
+  //           "name": constant_name,
+  //           "email": constant_email,
+  //           "password": password,
+  //           "phone": constant_phone,
+  //           "country_code": countrycode,
+  //           "dateOfBirth": "19/02/98",
+  //           "diplayImage":
+  //               "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png",
+  //           "longitude": "",
+  //           "latitude": "",
+  //         }));
+  //     showSnackBar("Please wait!");
 
-      if (response.statusCode == HttpStatus.accepted) {
-        print(response.body);
-      } else {
-        throw Exception("failed to upload the data");
-      }
-    } catch (e) {
-      showSnackBar(e.maessage);
-    }
-  }
+  //     if (response.statusCode == HttpStatus.accepted) {
+  //       print(jsonDecode(response.body));
+  //     } else {
+  //       throw Exception("failed to upload the data");
+  //     }
+  //   } catch (e) {
+  //     showSnackBar(e.maessage);
+  //   }
+  // }
 
   Future<void> resendCode() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
@@ -303,8 +315,8 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
               .linkWithCredential(phoneAuthCredential)
               .then((value) {
             if (value.user != null) {
-              postMethod(constant_email, registered_password, constant_name,
-                  constant_phone, country_Code);
+              // postMethod(constant_email, registered_password, constant_name,
+              //     constant_phone, country_Code);
 
               databaseReference.set(userMap);
               AppRoutes.makeFirst(context, VerifiedScreenClass());

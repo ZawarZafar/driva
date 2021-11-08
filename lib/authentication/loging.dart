@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/status/http_status.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_app/authentication/login_otp.dart';
 import 'package:flutter_app/authentication/otp_screen.dart';
 import 'package:flutter_app/core/authentication/authentication.dart';
@@ -23,7 +27,8 @@ class _LogingClassState extends State<LogingClass> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
   bool login = true;
-
+  // String _baseURL = "https://2ba3-119-152-139-177.ngrok.io/";
+  String _baseURL = "https://jsonplaceholder.typicode.com/posts";
   var usernameController = TextEditingController();
 
   var passwordController = TextEditingController();
@@ -35,6 +40,7 @@ class _LogingClassState extends State<LogingClass> {
   var confirmPasswordController = TextEditingController();
 
   String countryCode;
+
 //toast
   void showSnackBar(String title) {
     final snackBar = SnackBar(
@@ -454,7 +460,6 @@ class _LogingClassState extends State<LogingClass> {
             Heading: 'Sign up',
             onTap: () async {
               FocusScope.of(context).unfocus();
-              print(countryCode);
               country_Code = countryCode;
               registered_password = passwordController.text;
 
@@ -470,6 +475,39 @@ class _LogingClassState extends State<LogingClass> {
         ],
       ),
     );
+  }
+
+  void postMethod(email, password, username, phone, countrycode) async {
+    try {
+      final response = await http.post(Uri.parse(_baseURL), body: {
+        // "name": username,
+        // "email": email,
+        // "password": password,
+        // "phone": phone,
+        // "country_code": countrycode,
+        // "dateOfBirth": "19/02/98",
+        // "diplayImage":
+        //     "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png",
+        // "longitude": "",
+        // "latitude": "",
+
+        "title": "Anything",
+        "body": "Post Body",
+        "userId": "1",
+      });
+
+      showSnackBar("Please wait!");
+
+      print(response.body);
+
+      if (response.statusCode == HttpStatus.accepted) {
+        print("DATA HAS UPLOADED\n");
+      } else {
+        throw Exception("failed to upload the data\n");
+      }
+    } catch (e) {
+      showSnackBar(e.maessage);
+    }
   }
 
 //sign in with phone
@@ -620,6 +658,7 @@ class _LogingClassState extends State<LogingClass> {
       codeSent: (String verificationId, int resendToken) async {
         print('code sent');
         showSnackBar('A OTP code has been send to $phone');
+
         AppRoutes.makeFirst(context, OTPScreenClass());
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
@@ -630,6 +669,7 @@ class _LogingClassState extends State<LogingClass> {
   Future<void> signUpFunc(email, password, String name, String phone) async {
     try {
       showSnackBar('Please Wait');
+      postMethod(email, registered_password, name, phone, country_Code);
 
       phoneVerification(phone);
       constant_phone = phone;
