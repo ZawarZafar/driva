@@ -553,8 +553,10 @@ class _LogingClassState extends State<LogingClass> {
       showSnackBar('Please Enter Email');
     } else if (phone == null || phone == "") {
       showSnackBar('Please Enter Phone');
-    } else if (password == null || password == "") {
+    } else if (password == null) {
       showSnackBar('Please Enter Password');
+    } else if (password.length < 8) {
+      showSnackBar('Password should be of at least 8 characters');
     } else {
       showSnackBar('Please Wait...!');
       //checking if phone already registered with someone else name

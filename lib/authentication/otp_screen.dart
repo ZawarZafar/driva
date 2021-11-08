@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_app/authentication/verified.dart';
 import 'package:flutter_app/customer_ui/bar_drawer.dart';
@@ -24,7 +27,7 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   var codeController = TextEditingController();
-  int _otpCodeLength = 4;
+  int _otpCodeLength = 6;
   bool _isLoadingButton = false;
   bool _enableButton = false;
   String _otpCode = "";
@@ -138,7 +141,7 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
                 color: DarkGray, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Text(
-            'Please check your SMS\nWe just sent a verification code on your phone\n' +
+            'A 6-digit OTP code has been sent to your number\n' +
                 constant_phone,
             textAlign: TextAlign.center,
             style: TextStyle(color: DarkGray, fontSize: 15),
@@ -174,7 +177,7 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
               controller: codeController,
               onEditingComplete: verifyPress,
               decoration: InputDecoration(
-                hintText: '__ __ __ __',
+                hintText: '__ __ __ __ __ __',
                 hintStyle: TextStyle(color: lightGray, fontSize: 20),
               ),
               textAlign: TextAlign.center,
@@ -211,9 +214,17 @@ class _OTPScreenClassState extends State<OTPScreenClass> {
 
   void postMethod(email, password, username, phone, countrycode) async {
     try {
-      final response = await http.post(Uri.parse(_baseURL), body: "");
-      print(response.body);
+      final response = await http.post(Uri.parse(_baseURL),
+          body: jsonEncode(<String, String>{
+            "": "",
+          }));
       showSnackBar("Please wait!");
+
+      if (response.statusCode == HttpStatus.accepted) {
+        print(response.body);
+      } else {
+        throw Exception("failed to upload the data");
+      }
     } catch (e) {
       showSnackBar(e.maessage);
     }

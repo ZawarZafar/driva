@@ -472,7 +472,7 @@ class _CareRegistrationClassState extends State<CareRegistrationClass> {
       }
       databaseReference.set(vehicleMap).whenComplete(() {
         showSnackBar('Registered!');
-        AppRoutes.replace(context, CustomerHomeClass());
+        AppRoutes.replace(context, DriverHomeClass());
       });
     }
   }

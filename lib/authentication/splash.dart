@@ -41,6 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
             constant_uid = dataSnapshot.value['uid'];
             login = true;
             await HelperMethods.getCurrentUSerInfo();
+
             DatabaseReference teRef = FirebaseDatabase.instance
                 .reference()
                 .child('users/${user.uid}');

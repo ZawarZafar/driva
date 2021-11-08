@@ -87,7 +87,7 @@ class _OTPLoState extends State<OTPLo> {
                 color: DarkGray, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Text(
-            'Please check your SMS\nWe just sent a verification code on your phone\n' +
+            'A 6-digit OTP code has been sent to your number\n' +
                 constant_phone,
             textAlign: TextAlign.center,
             style: TextStyle(color: DarkGray, fontSize: 15),
@@ -107,7 +107,7 @@ class _OTPLoState extends State<OTPLo> {
             child: TextFormField(
               controller: codeController,
               decoration: InputDecoration(
-                hintText: '--  --  --  --  --  --',
+                hintText: '__ __ __ __ __ __',
                 hintStyle: TextStyle(color: lightGray, fontSize: 20),
               ),
               textAlign: TextAlign.center,

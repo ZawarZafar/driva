@@ -907,7 +907,7 @@ class _DriverHomeClassState extends State<DriverHomeClass> {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.bestForNavigation);
     User user = FirebaseAuth.instance.currentUser;
-    Geofire.initialize('driversAvailable');
+    Geofire.initialize('Available Drivers');
     if (status) {
       Geofire.setLocation(user.uid, position.latitude, position.longitude);
 
