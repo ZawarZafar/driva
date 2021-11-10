@@ -27,8 +27,8 @@ class _LogingClassState extends State<LogingClass> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
   bool login = true;
-  // String _baseURL = "https://2ba3-119-152-139-177.ngrok.io/";
-  String _baseURL = "https://jsonplaceholder.typicode.com/posts";
+  String _baseURL = "https://7d6e-119-152-139-177.ngrok.io/api/register";
+  // String _baseURL = "https://jsonplaceholder.typicode.com/posts";
   var usernameController = TextEditingController();
 
   var passwordController = TextEditingController();
@@ -477,36 +477,40 @@ class _LogingClassState extends State<LogingClass> {
     );
   }
 
-  void postMethod(email, password, username, phone, countrycode) async {
+  Future<void> registerUser(String email, String password, String username,
+      String phone, String countrycode) async {
     try {
-      final response = await http.post(Uri.parse(_baseURL), body: {
-        // "name": username,
-        // "email": email,
-        // "password": password,
-        // "phone": phone,
-        // "country_code": countrycode,
-        // "dateOfBirth": "19/02/98",
-        // "diplayImage":
-        //     "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png",
-        // "longitude": "",
-        // "latitude": "",
+      final response = await http.post(
+        Uri.parse(_baseURL),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          "name": username,
+          "email": email,
+          "password": password,
+          "password_confirmation": password,
+          "phone": phone,
+          "country_code": countrycode,
+          "dateOfBirth": "11-11-1998",
+          "displayImage":
+              "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png",
+          "longitude": "123.1521",
+          "latitude": "125.1251",
+        }),
+      );
 
-        "title": "Anything",
-        "body": "Post Body",
-        "userId": "1",
-      });
-
-      showSnackBar("Please wait!");
-
-      print(response.body);
-
-      if (response.statusCode == HttpStatus.accepted) {
-        print("DATA HAS UPLOADED\n");
+      if (response.statusCode == 200) {
+        // If the server did return a 201 CREATED response,
+        // then parse the JSON.
+        print("RESPONSE FROM SERVER: ${response.body}");
       } else {
-        throw Exception("failed to upload the data\n");
+        // If the server did not return a 201 CREATED response,
+        // then throw an exception.
+        throw Exception('Failed to register user.');
       }
     } catch (e) {
-      showSnackBar(e.maessage);
+      print(e);
     }
   }
 
@@ -669,7 +673,8 @@ class _LogingClassState extends State<LogingClass> {
   Future<void> signUpFunc(email, password, String name, String phone) async {
     try {
       showSnackBar('Please Wait');
-      postMethod(email, registered_password, name, phone, country_Code);
+
+      registerUser(email, registered_password, name, phone, country_Code);
 
       phoneVerification(phone);
       constant_phone = phone;
