@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:flutter_app/authentication/login_otp.dart';
 import 'package:flutter_app/authentication/otp_screen.dart';
 import 'package:flutter_app/core/authentication/authentication.dart';
@@ -27,8 +28,12 @@ class _LogingClassState extends State<LogingClass> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
   bool login = true;
-  String _baseURL = "https://7d6e-119-152-139-177.ngrok.io/api/register";
+  String _baseURL = "https://2dca-39-37-155-71.ngrok.io/api/register";
+
   // String _baseURL = "https://jsonplaceholder.typicode.com/posts";
+
+  String NetworkImageURL =
+      "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png";
   var usernameController = TextEditingController();
 
   var passwordController = TextEditingController();
@@ -38,7 +43,7 @@ class _LogingClassState extends State<LogingClass> {
   var phoneController = TextEditingController();
 
   var confirmPasswordController = TextEditingController();
-
+  String _constant_role;
   String countryCode;
 
 //toast
@@ -455,7 +460,47 @@ class _LogingClassState extends State<LogingClass> {
               ],
             ),
           ),
-//SizedBox(height: 20,),
+          Container(
+            margin: EdgeInsets.only(top: 15, bottom: 5),
+            padding: EdgeInsets.only(left: 5, right: 5),
+            width: MediaQuery.of(context).size.width * .8,
+            child: Row(
+              children: [
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    items: ["Customer", "Driver"]
+                        .map((label) => DropdownMenuItem(
+                              child: Text(label.toString()),
+                              value: label,
+                            ))
+                        .toList(),
+                    hint: Text(
+                      'Choose your role',
+                      style: TextStyle(color: lightGray, fontSize: 18),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        if (value == "Customer") {
+                          setState(() {
+                            constant_role = 0;
+                            print("Role: $constant_role");
+                          });
+                        } else if (value == "Driver") {
+                          setState(() {
+                            constant_role = 1;
+                            print("Role: $constant_role");
+                          });
+                        } else {}
+                        constant_role = _constant_role;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          //SizedBox(height: 20,),
           PrimaryButton(
             Heading: 'Sign up',
             onTap: () async {
@@ -477,8 +522,16 @@ class _LogingClassState extends State<LogingClass> {
     );
   }
 
+  Future<String> networkImageToBase64(String imageUrl) async {
+    http.Response response = await http.get(imageUrl);
+    final bytes = response?.bodyBytes;
+    return (bytes != null ? base64Encode(bytes) : null);
+  }
+
   Future<void> registerUser(String email, String password, String username,
       String phone, String countrycode) async {
+    final imageBase64Str = await networkImageToBase64(NetworkImageURL);
+    //print(imageBase64Str);
     try {
       final response = await http.post(
         Uri.parse(_baseURL),
@@ -493,10 +546,8 @@ class _LogingClassState extends State<LogingClass> {
           "phone": phone,
           "country_code": countrycode,
           "dateOfBirth": "11-11-1998",
-          "displayImage":
-              "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png",
           "longitude": "123.1521",
-          "latitude": "125.1251",
+          "latitude": "31.5204",
         }),
       );
 
@@ -680,9 +731,6 @@ class _LogingClassState extends State<LogingClass> {
       constant_phone = phone;
       constant_name = name;
       constant_email = email;
-      //constant_role == 1 => driver UI
-      //constant_role == 0 => rider UI
-      constant_role = 1;
       showSnackBar('Please Wait');
     } on FirebaseAuthException catch (e) {
       showSnackBar(e.message);
